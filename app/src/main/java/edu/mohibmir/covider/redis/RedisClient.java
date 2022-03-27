@@ -2,6 +2,7 @@ package edu.mohibmir.covider.redis;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.codec.SerializationCodec;
 import org.redisson.config.Config;
 
 import java.io.File;
@@ -22,6 +23,7 @@ public class RedisClient {
     public RedisClient(String address) {
         this.address = address;
         config = new Config();
+        config.setCodec(new SerializationCodec());
         config.useSingleServer().setAddress(address);
         instance = this;
         System.out.println("Instantiated Redis Client");

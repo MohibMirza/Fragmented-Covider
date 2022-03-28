@@ -1,15 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".second_fragment">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="70dp"/>
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Second Fragment"
-        android:textSize="100dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Health Self-Report Form"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="400dp"
+        android:layout_height="1dp"
+        android:background="#ACA1A1"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/userAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#B71C1C"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="20dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginLeft="5dp"/>
+        <RadioButton
+            android:id="@+id/Symptomatic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Symptomatic"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <RadioButton
+            android:id="@+id/Positve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COVID-19 +"
+            android:gravity="center"
+            android:textSize="20dp"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click To Submit"
+        android:textColor="#F5FBF6"
+        android:background="#B71C1C"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Building Check-In Form"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name:"
+            android:textSize="20dp"
+            android:layout_marginLeft="5dp"/>
+        <EditText
+            android:id="@+id/buildingName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:textSize="20dp"
+            android:background="#5676"
+            android:hint="Enter a Building Name..."
+            android:layout_marginLeft="3dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSubmit2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click To Submit"
+        android:textColor="#F5FBF6"
+        android:background="#B71C1C"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
+
+

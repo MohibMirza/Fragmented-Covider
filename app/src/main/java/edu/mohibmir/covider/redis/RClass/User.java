@@ -1,15 +1,16 @@
 package edu.mohibmir.covider.redis.RClass;
 
+import org.redisson.api.RBucket;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
-
-import edu.mohibmir.covider.redis.RedisClient;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import edu.mohibmir.covider.redis.RedisClient;
 
 public class User implements Serializable {
 
@@ -194,6 +195,7 @@ public class User implements Serializable {
             return;
         }
         visitedBuildingCount.put(buildingId, count+1);
+
 
     }
 

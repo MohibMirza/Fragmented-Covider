@@ -27,6 +27,9 @@ public class Building implements Serializable {
         if(!redisson.getAtomicDouble(this.name + ".riskscore").isExists()) {
             redisson.getAtomicDouble(this.name + ".riskscore").set(1000.0);
             redisson.getMap(this.name + ".lastVisited");
+
+            redisson.getAtomicDouble(this.name + ".latitude").set(0.0);
+            redisson.getAtomicDouble(this.name + ".longitude").set(0.0);
         }
 
     }
@@ -44,6 +47,16 @@ public class Building implements Serializable {
         for(int i = 0; i < amount; i++)
             riskscore.decrementAndGet();
     }
+
+    public double getLatitude() {
+        return (Double) redisson.getAtomicDouble(name + ".latitude").get();
+    }
+
+    public double getLongitude() {
+        return (Double) redisson.getAtomicDouble(name + ".longitude").get();
+    }
+
+
 
     public void addVisit(String userId) {
         userId = userId.toLowerCase();
@@ -67,6 +80,14 @@ public class Building implements Serializable {
 
     public double getRiskScore() {
         return (double) redisson.getAtomicDouble(name + ".riskscore").get();
+    }
+
+    public void setLongitude(double val) {
+        redisson.getAtomicDouble(name + ".longitude").set(val);
+    }
+
+    public void setLatitude(double val) {
+        redisson.getAtomicDouble(name + ".latitude").set(val);
     }
 
     public boolean checkIfVisitedWithin10Days(String userId) {
@@ -108,6 +129,9 @@ public class Building implements Serializable {
 
         redisson.getMap(name + ".lastVisited").clear();
         redisson.getMap(name + ".lastVisited").delete();
+        redisson.getAtomicDouble(name + ".latitude").delete();
+        redisson.getAtomicDouble(name + ".longitude").delete();
+
     }
 
     private static boolean checkIfExists(String buildingName) {

@@ -39,6 +39,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
         b.setOnClickListener(this);
         textViewLinkRegister.setOnClickListener(this);
+
+        Intent menuIntent = new Intent(this, MainActivity.class);
+        startActivity(menuIntent);
     }
 
     /**

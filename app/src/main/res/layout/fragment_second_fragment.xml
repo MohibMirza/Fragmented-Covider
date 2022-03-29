@@ -50,17 +50,24 @@
             android:layout_marginRight="35dp"
             android:layout_marginLeft="5dp"/>
         <RadioButton
-            android:id="@+id/Symptomatic"
+            android:id="@+id/Healthy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Symptomatic"
+            android:text="Healthy"
             android:gravity="center"
             android:textSize="20dp"/>
         <RadioButton
-            android:id="@+id/Positve"
+            android:id="@+id/Sick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="COVID-19 +"
+            android:text="Sick"
+            android:gravity="center"
+            android:textSize="20dp"/>
+        <RadioButton
+            android:id="@+id/Covid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COVID"
             android:gravity="center"
             android:textSize="20dp"/>
     </RadioGroup>

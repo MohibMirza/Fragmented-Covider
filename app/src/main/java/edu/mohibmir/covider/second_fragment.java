@@ -1,5 +1,6 @@
 package edu.mohibmir.covider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import edu.mohibmir.covider.redis.RClass.Status;
+import edu.mohibmir.covider.redis.RClass.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +31,12 @@ public class second_fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RadioButton healthyBtn,sickBtn, covidBtn;
+    private Button submitSelfReport, submitCheckIn;
+    private EditText buildingNameField;
+    private String userId;
+
 
     public second_fragment() {
         // Required empty public constructor
@@ -59,6 +73,52 @@ public class second_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second_fragment, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_second_fragment, container, false);
+
+        if (requireActivity().getIntent().hasExtra("ID")) {
+            userId = requireActivity().getIntent().getStringExtra("ID");
+        }
+
+        healthyBtn = view.findViewById(R.id.Healthy);
+        sickBtn = view.findViewById(R.id.Sick);
+        covidBtn = view.findViewById(R.id.Covid);
+
+        buildingNameField = view.findViewById(R.id.buildingName);
+
+        submitSelfReport = view.findViewById(R.id.btnSubmit);
+        submitCheckIn = view.findViewById(R.id.btnSubmit2);
+
+        submitSelfReport.setOnClickListener(view1 -> {
+            boolean healthyClicked = healthyBtn.isChecked();
+            boolean sickClicked = sickBtn.isChecked();
+            boolean covidClicked= covidBtn.isChecked();
+
+            if(!healthyClicked && !sickClicked && !covidClicked) {
+                Toast.makeText(getActivity(),"Please choose a status",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(userId == null) {
+                Toast.makeText(getActivity(),"Login Error",Toast.LENGTH_SHORT).show();
+            }
+
+            User user = new User(userId);
+
+            if(healthyClicked) {
+                user.setCovidStatus(Status.healthy);
+            }else if(sickClicked) {
+                user.setCovidStatus(Status.symptomatic);
+            }else if(covidClicked) {
+                user.setCovidStatus(Status.infected);
+            }
+        });
+
+        submitCheckIn.setOnClickListener(view1 -> {
+            Toast.makeText(getActivity(),buildingNameField.getText(),Toast.LENGTH_SHORT).show();
+        });
+
+
+        return view;
     }
 }

@@ -6,6 +6,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,6 +21,8 @@ import static edu.mohibmir.covider.redis.RedisDatabase.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
 
-        NavController navController = navHostFragment.getNavController();;
+        NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         // This starts the redis client
@@ -37,10 +40,5 @@ public class MainActivity extends AppCompatActivity {
         // you need to access redis use RedisClient.getInstance()
         RedisClient redis = new RedisClient("redis://10.0.2.2:6379");
         redis.start();
-
-
-
-
-
     }
 }

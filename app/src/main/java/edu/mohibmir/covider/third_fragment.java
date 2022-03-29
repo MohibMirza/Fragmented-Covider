@@ -125,7 +125,7 @@ public class third_fragment extends Fragment {
         List<String> studentList = class1.getStudents();
         String inperson;
         if (class1.getInPerson() == true) inperson = " In-Person";
-        else inperson = "Online";
+        else inperson = " Online";
 
         arrayList.add(class1.getClassName() + inperson);
 

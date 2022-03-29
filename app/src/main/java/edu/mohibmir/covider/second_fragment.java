@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.mohibmir.covider.redis.RClass.Building;
@@ -35,9 +36,10 @@ public class second_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private RadioButton healthyBtn,sickBtn, covidBtn;
+    private TextView setClassStatus;
+    private RadioButton healthyBtn,sickBtn, covidBtn, remoteBtn, inPersonBtn;
     private RadioGroup radioGroupSetClass;
-    private Button submitSelfReport, submitCheckIn;
+    private Button submitSelfReport, submitCheckIn, submitClassSet;
     private EditText buildingNameField;
     private static String userId;
 
@@ -82,14 +84,21 @@ public class second_fragment extends Fragment {
 
         userId = RedisDatabase.userId;
 
+        setClassStatus = view.findViewById(R.id.setClassStatus);
+
         healthyBtn = view.findViewById(R.id.Healthy);
         sickBtn = view.findViewById(R.id.Sick);
         covidBtn = view.findViewById(R.id.Covid);
+        remoteBtn = view.findViewById(R.id.Remote);
+        inPersonBtn = view.findViewById(R.id.inPerson);
+
+        radioGroupSetClass = view.findViewById(R.id.radioGroupSetClass);
 
         buildingNameField = view.findViewById(R.id.buildingName);
 
         submitSelfReport = view.findViewById(R.id.btnSubmit);
         submitCheckIn = view.findViewById(R.id.btnSubmit2);
+        submitClassSet = view.findViewById(R.id.btnSubmit3);
 
         submitSelfReport.setOnClickListener(view1 -> {
             boolean healthyClicked = healthyBtn.isChecked();
@@ -133,10 +142,27 @@ public class second_fragment extends Fragment {
         User user = new User(userId);
         if(!user.getIsInstructor()) return view;
 
+        setClassStatus.setVisibility(View.VISIBLE);
 
+        radioGroupSetClass.setVisibility(View.VISIBLE);
+        submitClassSet.setVisibility(View.VISIBLE);
 
+        submitClassSet.setOnClickListener(view1 -> {
+            boolean inPersonClicked = inPersonBtn.isChecked();
+            boolean remoteClicked = remoteBtn.isChecked();
 
+            if(!inPersonClicked && !remoteClicked) {
+                Toast.makeText(getActivity(),"Please pick a choice...",Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            if(inPersonClicked) {
+                user.setAllClassesLive();
+            }else{
+                user.setAllClassesRemote();
+            }
+
+        });
 
         return view;
     }

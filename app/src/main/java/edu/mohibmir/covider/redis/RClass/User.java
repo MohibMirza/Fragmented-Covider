@@ -144,6 +144,38 @@ public class User implements Serializable {
         redisson.getBucket(name + ".class5").set(className);
     }
 
+    public void setAllClassesRemote() {
+        Vector<String> classes = new Vector<>();
+        classes.add(getClass1());
+        classes.add(getClass2());
+        classes.add(getClass3());
+        classes.add(getClass4());
+        classes.add(getClass5());
+
+        for(String className : classes) {
+            if(className.compareTo("") != 0) {
+                Class clas = new Class(className);
+                clas.setInPerson(false);
+            }
+        }
+    }
+
+    public void setAllClassesLive() {
+        Vector<String> classes = new Vector<>();
+        classes.add(getClass1());
+        classes.add(getClass2());
+        classes.add(getClass3());
+        classes.add(getClass4());
+        classes.add(getClass5());
+
+        for(String className : classes) {
+            if(className.compareTo("") != 0) {
+                Class clas = new Class(className);
+                clas.setInPerson(true);
+            }
+        }
+    }
+
     public void setIsInstructor(boolean isInstructor) {
         if(isInstructor == true) {
             redisson.getBucket(name + ".isInstructor").set("true");

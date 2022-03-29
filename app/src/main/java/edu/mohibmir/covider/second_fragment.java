@@ -16,6 +16,7 @@ import android.widget.Toast;
 import edu.mohibmir.covider.redis.RClass.Building;
 import edu.mohibmir.covider.redis.RClass.Status;
 import edu.mohibmir.covider.redis.RClass.User;
+import edu.mohibmir.covider.redis.RedisDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +37,7 @@ public class second_fragment extends Fragment {
     private RadioButton healthyBtn,sickBtn, covidBtn;
     private Button submitSelfReport, submitCheckIn;
     private EditText buildingNameField;
-    private String userId;
+    private static String userId;
 
 
     public second_fragment() {
@@ -77,9 +78,7 @@ public class second_fragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_second_fragment, container, false);
 
-        if (requireActivity().getIntent().hasExtra("ID")) {
-            userId = requireActivity().getIntent().getStringExtra("ID");
-        }
+        userId = RedisDatabase.userId;
 
         healthyBtn = view.findViewById(R.id.Healthy);
         sickBtn = view.findViewById(R.id.Sick);

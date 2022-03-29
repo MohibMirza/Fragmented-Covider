@@ -13,6 +13,8 @@ import edu.mohibmir.covider.redis.RClass.Visit;
 
 public class RedisDatabase {
 
+    public static String userId;
+
     public static RLiveObjectService rlo = RedisClient.getInstance().redisson.getLiveObjectService();
 
     public static Building getOrCreateBuilding(String buildingId) {

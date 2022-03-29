@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import edu.mohibmir.covider.redis.RClass.Building;
 import edu.mohibmir.covider.redis.RClass.Status;
 import edu.mohibmir.covider.redis.RClass.User;
 
@@ -99,8 +100,8 @@ public class second_fragment extends Fragment {
                 return;
             }
 
-            if(userId == null) {
-                Toast.makeText(getActivity(),"Login Error",Toast.LENGTH_SHORT).show();
+            if(userId.isEmpty()) {
+                Toast.makeText(getActivity(),"Login Error: Please Restart App",Toast.LENGTH_SHORT).show();
             }
 
             User user = new User(userId);
@@ -112,10 +113,20 @@ public class second_fragment extends Fragment {
             }else if(covidClicked) {
                 user.setCovidStatus(Status.infected);
             }
+            Toast.makeText(getActivity(),"Status Updated...",Toast.LENGTH_SHORT).show();
         });
 
         submitCheckIn.setOnClickListener(view1 -> {
-            Toast.makeText(getActivity(),buildingNameField.getText(),Toast.LENGTH_SHORT).show();
+            if(userId == null) {
+                Toast.makeText(getActivity(),"Login Error: Please Restart App",Toast.LENGTH_SHORT).show();
+            }
+            String buildingName = buildingNameField.getText().toString().toLowerCase();
+            Toast.makeText(getActivity(), "Registered Visit to " + buildingName + "today.",Toast.LENGTH_SHORT).show();
+            Building building = new Building(buildingName);
+            building.addVisit(userId);
+
+            User user = new User(userId);
+            user.addVisit(buildingName);
         });
 
 

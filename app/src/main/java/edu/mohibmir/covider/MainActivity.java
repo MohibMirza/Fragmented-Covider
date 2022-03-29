@@ -38,7 +38,5 @@ public class MainActivity extends AppCompatActivity {
         // This starts the redis client
         // This code should only be run once when the app starts. If
         // you need to access redis use RedisClient.getInstance()
-        RedisClient redis = new RedisClient("redis://10.0.2.2:6379");
-        redis.start();
     }
 }

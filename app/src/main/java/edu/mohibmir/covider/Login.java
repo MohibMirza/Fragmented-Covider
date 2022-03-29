@@ -15,6 +15,8 @@ import androidx.core.widget.NestedScrollView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import edu.mohibmir.covider.redis.RedisClient;
 import edu.mohibmir.covider.redis.RedisDatabase;
 import edu.mohibmir.covider.redis.RClass.User;
 
@@ -31,6 +33,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        RedisClient redis = new RedisClient("redis://10.0.2.2:6379");
+        redis.start();
         setContentView(R.layout.login_activity);
         getSupportActionBar().hide();
         nestedScrollView = (NestedScrollView) findViewById(R.id.nestedScrollView);
@@ -126,20 +131,24 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
      * This method is to validate the input text fields and verify login credentials from SQLite
      */
     private void verifyFromRedis() {
-        if (!isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
-            return;
-        }
-        if (!isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Password is wrong")) {
-            return;
-        }
+//        if (!isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
+//            return;
+//        }
+//        if (!isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Password is wrong")) {
+//            return;
+//        }
         String id = textInputEditTextEmail.getText().toString();
         if(id == null) {
             Log.d("id:", "ID IS NULL");
         }
         User u = new User(id);
         String pass = textInputEditTextPassword.getText().toString();
+        Log.d("Input ID", id);
+        Log.d("Input Password", pass);
 
-        if (u.getPassword() == pass) {
+        Log.d("Should be password", u.getPassword());
+
+        if (u.getPassword().compareTo(pass) == 0) {
             Toast.makeText(this,"Successful Login",Toast.LENGTH_SHORT).show();
 
             RedisDatabase.userId = id.toLowerCase();

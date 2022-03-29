@@ -24,6 +24,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button b;
     private AppCompatTextView textViewLinkRegister;
     private android.content.Context context;
+    public static String;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,25 +60,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
         return true;
     }
-    /**
-     * method to check InputEditText has valid email .
-     *
-     * @param textInputEditText
-     * @param textInputLayout
-     * @param message
-     * @return
-     */
-    public boolean isInputEditTextEmail(TextInputEditText textInputEditText, TextInputLayout textInputLayout, String message) {
-        String value = textInputEditText.getText().toString().trim();
-        if (value.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
-            textInputLayout.setError(message);
-            hideKeyboardFrom(textInputEditText);
-            return false;
-        } else {
-            textInputLayout.setErrorEnabled(false);
-        }
-        return true;
-    }
+
     public boolean isInputEditTextMatches(TextInputEditText textInputEditText1, TextInputEditText textInputEditText2, TextInputLayout textInputLayout, String message) {
         String value1 = textInputEditText1.getText().toString().trim();
         String value2 = textInputEditText2.getText().toString().trim();
@@ -125,23 +108,26 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (!isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
             return;
         }
-        if (!isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
-            return;
-        }
+
         if (!isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Enter valid email")) {
             return;
         }
         String id = textInputEditTextEmail.getText().toString();
-        User u = RedisDatabase.getOrCreateUser(id);
+        //User u = RedisDatabase.getOrCreateUser(id);
         String pass = textInputEditTextPassword.getText().toString();
-
-        if (u.getPassword() == pass) {
+        Intent firstIntent = new Intent(getApplicationContext(),first_fragment.class);
+        Intent secondIntent = new Intent(getApplicationContext(),second_fragment.class);
+        Intent thirdIntent = new Intent(getApplicationContext(),third_fragment.class);
+        firstIntent.putExtra("ID",id);
+        secondIntent.putExtra("ID",id);
+        thirdIntent.putExtra("ID",id);
+/*        if (u.getPassword() == pass) {
 
         }
         else {
             // Snack Bar to show success message that record is wrong
             Snackbar.make(nestedScrollView, "Wrong email or password", Snackbar.LENGTH_LONG).show();
-        }
+        } */
     }
     /**
      * This method is to empty all input edit text

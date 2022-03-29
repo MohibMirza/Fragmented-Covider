@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import edu.mohibmir.covider.redis.RClass.Building;
@@ -35,6 +36,7 @@ public class second_fragment extends Fragment {
     private String mParam2;
 
     private RadioButton healthyBtn,sickBtn, covidBtn;
+    private RadioGroup radioGroupSetClass;
     private Button submitSelfReport, submitCheckIn;
     private EditText buildingNameField;
     private static String userId;
@@ -127,6 +129,13 @@ public class second_fragment extends Fragment {
             User user = new User(userId);
             user.addVisit(buildingName);
         });
+
+        User user = new User(userId);
+        if(!user.getIsInstructor()) return view;
+
+
+
+
 
 
         return view;

@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import edu.mohibmir.covider.redis.RClass.Building;
 import edu.mohibmir.covider.redis.RClass.Class;
+import edu.mohibmir.covider.redis.RClass.Status;
 import edu.mohibmir.covider.redis.RClass.User;
+import edu.mohibmir.covider.redis.RedisDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,15 +69,9 @@ public class third_fragment extends Fragment {
 
         arrayList = new ArrayList<>();
         arrayList.add("");
-        arrayList.add("dava");
-        arrayList.add("dava");
-        arrayList.add("dava");
-        arrayList.add("dava");
 
+        User user = new User(RedisDatabase.userId);
 
-
-
-        User user = new User("12345");
         if (user.getIsInstructor() == false)
         {
             populateStudent(user);
@@ -96,43 +92,48 @@ public class third_fragment extends Fragment {
     public void populateStudent(User user) {
 
         arrayList.add(user.getFirstName() + " " + user.getLastName()  + "      " + user.getCovidStatus());
-        arrayList.add("ID " + user.getUserId());
+        arrayList.add("ID: " + user.getUserId());
 
         String string = user.getClass1();
         String inperson;
-        int i = 1;
-        while (string != null)
+        for (int i = 1; i<=5; i++)
         {
             Class class1 = new Class(string);
-            Log.d("test", "test");
-            if (class1.getInPerson() == true) {
-                inperson = "In-person";
-            } else {
-                inperson = "Online";
+            if (class1.getClassName() != "") {
+                if (class1.getInPerson() == true) {
+                    inperson = "In-person";
+                } else {
+                    inperson = "Online";
+                }
+                arrayList.add(class1.getClassName() + "          " + inperson);
+                if (i == 2) string = user.getClass2();
+                if (i == 3) string = user.getClass3();
+                if (i == 4) string = user.getClass4();
+                if (i == 5) string = user.getClass5();
             }
-            arrayList.add(class1.getClassName() + "          " + inperson);
-            i++;
-            if (i == 2) string = user.getClass2();
-            if (i == 3) string = user.getClass3();
-            if (i == 4) string = user.getClass4();
-            if (i == 5) string = user.getClass5();
         }
 
     }
     public void populateInstructor(User user) {
 
         arrayList.add(user.getFirstName() + " " + user.getLastName()  + "      " + user.getCovidStatus());
-        arrayList.add("ID " + user.getUserId());
+        arrayList.add("ID: " + user.getUserId());
+
 
         String string = user.getClass1();
         Class class1 = new Class(string);
-        Log.d("test", "test");
-
         List<String> studentList = class1.getStudents();
-        arrayList.add(class1.getClassName());
+        String inperson;
+        if (class1.getInPerson() == true) inperson = " In-Person";
+        else inperson = "Online";
+
+        arrayList.add(class1.getClassName() + inperson);
 
         for (int i = 0; i < studentList.size(); i ++) {
-            arrayList.add(studentList.get(i));
+            User student = new User(studentList.get(i));
+            if (student.getIsInstructor() == false) {
+                arrayList.add(student.getFirstName() + " " + student.getLastName() + " " + student.getCovidStatus());
+            }
         }
 
 

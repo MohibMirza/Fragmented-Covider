@@ -1,6 +1,5 @@
 package edu.mohibmir.covider.redis.RClass;
 
-import org.redisson.api.RBucket;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.Vector;
 
 import edu.mohibmir.covider.redis.RedisClient;
 
@@ -183,6 +183,24 @@ public class User implements Serializable {
             if(building.checkIfVisitedWithin10Days(userId)){
                 building.decrementRiskScore(penalty);
             }
+        }
+
+        if(getCovidStatus().compareTo("infected") == 0 && getIsInstructor()) {
+            Vector<String> classes = new Vector<>();
+            classes.add(getClass1());
+            classes.add(getClass2());
+            classes.add(getClass3());
+            classes.add(getClass4());
+            classes.add(getClass5());
+
+            for(String className : classes) {
+                if(className.compareTo("") != 0) {
+                    Class clas = new Class(className);
+                    clas.setInPerson(false);
+                }
+            }
+
+
         }
     }
 

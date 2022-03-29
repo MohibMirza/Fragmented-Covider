@@ -2,9 +2,12 @@ package edu.mohibmir.covider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.widget.NestedScrollView;
@@ -38,9 +41,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         textViewLinkRegister = (AppCompatTextView) findViewById(R.id.textViewLinkRegister);
         b.setOnClickListener(this);
         textViewLinkRegister.setOnClickListener(this);
-
-        Intent menuIntent = new Intent(this, MainActivity.class);
-        startActivity(menuIntent);
     }
 
     /**
@@ -128,17 +128,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (!isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
             return;
         }
-        if (!isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, "Enter valid email")) {
-            return;
-        }
-        if (!isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Enter valid email")) {
+        if (!isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, "Password is wrong")) {
             return;
         }
         String id = textInputEditTextEmail.getText().toString();
-        User u = RedisDatabase.getOrCreateUser(id);
+        if(id == null) {
+            Log.d("id:", "ID IS NULL");
+        }
+        User u = new User(id);
         String pass = textInputEditTextPassword.getText().toString();
 
         if (u.getPassword() == pass) {
+            Toast.makeText(this,"Successful Login",Toast.LENGTH_SHORT).show();
+
+            RedisDatabase.userId = id.toLowerCase();
+
+            Intent menuIntent = new Intent(this, MainActivity.class);
+            startActivity(menuIntent);
 
         }
         else {
